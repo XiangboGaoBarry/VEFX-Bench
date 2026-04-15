@@ -7,20 +7,33 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/style.css?v=1.0">
+    <link rel="stylesheet" href="static/css/style.css?v=2.0">
 </head>
 <body>
 
+    <!-- Sticky TOC Navigation -->
+    <nav class="toc-nav" id="toc-nav">
+        <div class="toc-inner">
+            <a href="#leaderboard" class="toc-link">🏆 Leaderboard</a>
+            <a href="#showcase" class="toc-link">🎬 Video Demo</a>
+            <a href="#about" class="toc-link">📖 About</a>
+            <a href="#dimensions" class="toc-link">📐 Dimensions</a>
+            <a href="#stats" class="toc-link">📊 Stats</a>
+            <a href="#findings" class="toc-link">💡 Findings</a>
+            <a href="#citation" class="toc-link">📝 Citation</a>
+        </div>
+    </nav>
+
     <!-- Hero -->
-    <section class="hero">
-        <img src="logo.png" alt="VEFX-Bench Logo" class="hero-logo">
+    <section class="hero" id="hero">
+        <img src="logo.png" alt="VEFX-Bench Logo" class="hero-logo" style="display:none">
         <h1>VEFX-<span class="accent">Bench</span></h1>
         <p class="hero-tagline">Benchmarking Generic Video Editing<br>and Visual Effects</p>
         <div class="hero-links">
             <a href="#" class="pill">📄 Paper</a>
             <a href="https://github.com/taco-group/VEFX-Bench" class="pill">💻 Code</a>
             <a href="https://huggingface.co/datasets/xiangbog/VEFX-Bench" class="pill pill-outline">🤗 Dataset</a>
-            <a href="#" class="pill pill-outline">🏆 Leaderboard</a>
+            <a href="https://vefx-leaderboard.com/" class="pill pill-outline">🏆 Leaderboard</a>
         </div>
         <p class="hero-authors">
             <a href="https://www.xiangbogao.com/" class="author-link">Xiangbo Gao</a><sup>1,2</sup> &middot;
@@ -43,55 +56,120 @@
         <p class="hero-affiliation"><sup>1</sup>Texas A&amp;M University &nbsp; <sup>2</sup>Visko Platform &nbsp; <sup>3</sup>Abaka AI &nbsp; <sup>4</sup>UW-Madison</p>
     </section>
 
-    <!-- Problem Statement -->
-    <section class="section-dark">
-        <div class="container narrow">
-            <h2>Editing video is easy.<br>Measuring quality is hard.</h2>
-            <p class="body-large">
-                Video editing models can now follow complex instructions — zooming, removing objects,
-                changing styles, adding elements. But how do we know which edits are actually <strong>good</strong>?
-            </p>
-            <p class="body-large">
-                <strong>VEFX-Dataset</strong> provides <strong>5,049</strong> human-annotated video editing examples
-                from <strong>1,419</strong> source videos across <strong>9 categories</strong> and <strong>32 subcategories</strong>,
-                scored along three decoupled dimensions. We further release <strong>VEFX-Reward</strong>, a dedicated
-                reward model, and <strong>VEFX-Bench</strong>, a benchmark of 300 curated pairs for standardized comparison.
-            </p>
-        </div>
-    </section>
-
-    <!-- Three Dimensions -->
-    <section class="section-light">
+    <!-- Leaderboard (moved to top) -->
+    <section class="section-light" id="leaderboard">
         <div class="container">
             <div class="section-header">
-                <h2>Three dimensions of editing quality.</h2>
-                <p class="section-subtitle">Each edited video is scored on a 1–4 scale across three independent axes, capturing distinct aspects of quality.</p>
+                <h2>Model Leaderboard</h2>
+                <p class="section-subtitle">VEFX-Reward scores on the 1–4 scale. Ranked by GeoAgg (α=2 for IF, β=1 for RQ, γ=1 for EE). Higher is better.</p>
+                <p class="leaderboard-date">Updated: May 2, 2026</p>
             </div>
-            <div class="dim-grid">
-                <div class="dim-card">
-                    <div class="dim-icon if-icon">🎯</div>
-                    <span class="dim-abbr if-abbr">IF</span>
-                    <h3>Instruction Following</h3>
-                    <p>Does the edit faithfully execute the given instruction? Measures semantic accuracy — whether the intended change actually happened.</p>
-                </div>
-                <div class="dim-card">
-                    <div class="dim-icon rq-icon">🎨</div>
-                    <span class="dim-abbr rq-abbr">RQ</span>
-                    <h3>Rendering Quality</h3>
-                    <p>Is the output visually clean and artifact-free? Evaluates temporal consistency, spatial fidelity, and overall visual quality of the edited video.</p>
-                </div>
-                <div class="dim-card">
-                    <div class="dim-icon ee-icon">🔒</div>
-                    <span class="dim-abbr ee-abbr">EE</span>
-                    <h3>Edit Exclusivity</h3>
-                    <p>Are unrelated regions preserved? Captures whether the model only changed what was asked — without unintended side effects elsewhere.</p>
-                </div>
+            <div class="leaderboard-live-banner reveal">
+                <span class="live-dot"></span>
+                <span>For the latest results & submissions, visit the <strong>live leaderboard</strong>:</span>
+                <a href="https://vefx-leaderboard.com/" class="live-link" target="_blank">vefx-leaderboard.com →</a>
+            </div>
+            <div class="leaderboard-wrapper reveal">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Type</th>
+                            <th>IF ↑</th>
+                            <th>RQ ↑</th>
+                            <th>EE ↑</th>
+                            <th>GeoAgg ↑</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="rank-badge rank-1">1</span>Kling o3 Omni</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td class="second-best-score">3.033</td>
+                            <td class="best-score">3.588</td>
+                            <td>3.043</td>
+                            <td class="best-score">3.057</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-2">2</span>Kling o1</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td class="best-score">3.040</td>
+                            <td class="second-best-score">3.534</td>
+                            <td>2.976</td>
+                            <td class="second-best-score">2.985</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-3">3</span>Runway Gen-4.5</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td>2.817</td>
+                            <td>3.319</td>
+                            <td>2.923</td>
+                            <td>2.912</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-other">4</span>Seedance 2.0</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td>2.811</td>
+                            <td>3.421</td>
+                            <td>3.088</td>
+                            <td>2.766</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-other">5</span>Grok Imagine</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td>2.606</td>
+                            <td>3.346</td>
+                            <td class="best-score">3.376</td>
+                            <td>2.723</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-other">6</span>Luma Ray 3</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td>2.702</td>
+                            <td>3.403</td>
+                            <td>2.705</td>
+                            <td>2.717</td>
+                        </tr>
+                        <tr class="opensource-separator">
+                            <td><span class="rank-badge rank-other">7</span>UniVideo</td>
+                            <td><span class="type-badge type-opensource">Open-source</span></td>
+                            <td>2.294</td>
+                            <td>3.266</td>
+                            <td class="second-best-score">3.091</td>
+                            <td>2.516</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-other">8</span>Wan 2.6</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td>2.012</td>
+                            <td>3.317</td>
+                            <td>2.446</td>
+                            <td>2.146</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-other">9</span>Luma Ray 2</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td>2.038</td>
+                            <td>2.532</td>
+                            <td>1.363</td>
+                            <td>1.804</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-other">10</span>VACE</td>
+                            <td><span class="type-badge type-opensource">Open-source</span></td>
+                            <td>2.027</td>
+                            <td>3.172</td>
+                            <td class="worst-score">1.180</td>
+                            <td class="worst-score">1.775</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
 
-    <!-- Showcase -->
-    <section class="section-accent">
+    <!-- Showcase (Video Demo) -->
+    <section class="section-accent" id="showcase">
         <div class="container wide">
             <div class="section-header">
                 <h2>See the benchmark in action.</h2>
@@ -467,8 +545,55 @@
         </div>
     </section>
 
+    <!-- Problem Statement (About) -->
+    <section class="section-dark" id="about">
+        <div class="container narrow">
+            <h2>Editing video is easy.<br>Measuring quality is hard.</h2>
+            <p class="body-large">
+                Video editing models can now follow complex instructions — zooming, removing objects,
+                changing styles, adding elements. But how do we know which edits are actually <strong>good</strong>?
+            </p>
+            <p class="body-large">
+                <strong>VEFX-Dataset</strong> provides <strong>5,049</strong> human-annotated video editing examples
+                from <strong>1,419</strong> source videos across <strong>9 categories</strong> and <strong>32 subcategories</strong>,
+                scored along three decoupled dimensions. We further release <strong>VEFX-Reward</strong>, a dedicated
+                reward model, and <strong>VEFX-Bench</strong>, a benchmark of 300 curated pairs for standardized comparison.
+            </p>
+        </div>
+    </section>
+
+    <!-- Three Dimensions -->
+    <section class="section-light" id="dimensions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Three dimensions of editing quality.</h2>
+                <p class="section-subtitle">Each edited video is scored on a 1–4 scale across three independent axes, capturing distinct aspects of quality.</p>
+            </div>
+            <div class="dim-grid">
+                <div class="dim-card">
+                    <div class="dim-icon if-icon">🎯</div>
+                    <span class="dim-abbr if-abbr">IF</span>
+                    <h3>Instruction Following</h3>
+                    <p>Does the edit faithfully execute the given instruction? Measures semantic accuracy — whether the intended change actually happened.</p>
+                </div>
+                <div class="dim-card">
+                    <div class="dim-icon rq-icon">🎨</div>
+                    <span class="dim-abbr rq-abbr">RQ</span>
+                    <h3>Rendering Quality</h3>
+                    <p>Is the output visually clean and artifact-free? Evaluates temporal consistency, spatial fidelity, and overall visual quality of the edited video.</p>
+                </div>
+                <div class="dim-card">
+                    <div class="dim-icon ee-icon">🔒</div>
+                    <span class="dim-abbr ee-abbr">EE</span>
+                    <h3>Edit Exclusivity</h3>
+                    <p>Are unrelated regions preserved? Captures whether the model only changed what was asked — without unintended side effects elsewhere.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Stats -->
-    <section class="section-dark">
+    <section class="section-dark" id="stats">
         <div class="container">
             <div class="section-header">
                 <h2>Benchmark at a glance.</h2>
@@ -487,7 +612,7 @@
                     <div class="stat-label">Categories / Subcategories</div>
                 </div>
                 <div class="stat-card reveal">
-                    <div class="stat-number">6</div>
+                    <div class="stat-number">10</div>
                     <div class="stat-label">Editing Systems</div>
                 </div>
                 <div class="stat-card reveal">
@@ -502,82 +627,8 @@
         </div>
     </section>
 
-    <!-- Leaderboard -->
-    <section class="section-light">
-        <div class="container">
-            <div class="section-header">
-                <h2>Model leaderboard.</h2>
-                <p class="section-subtitle">VEFX-Reward-32B scores on the 1–4 scale. Ranked by overall average. Higher is better.</p>
-            </div>
-            <div class="leaderboard-wrapper reveal">
-                <table class="leaderboard-table">
-                    <thead>
-                        <tr>
-                            <th>Model</th>
-                            <th>Type</th>
-                            <th>IF ↑</th>
-                            <th>RQ ↑</th>
-                            <th>EE ↑</th>
-                            <th>Overall ↑</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="rank-badge rank-1">1</span>Grok Imagine</td>
-                            <td><span class="type-badge type-commercial">Commercial</span></td>
-                            <td>2.73</td>
-                            <td>3.42</td>
-                            <td class="best-score">3.39</td>
-                            <td class="best-score">3.18</td>
-                        </tr>
-                        <tr>
-                            <td><span class="rank-badge rank-2">2</span>Kling Omni</td>
-                            <td><span class="type-badge type-commercial">Commercial</span></td>
-                            <td class="best-score">3.08</td>
-                            <td class="best-score">3.63</td>
-                            <td>2.77</td>
-                            <td>3.16</td>
-                        </tr>
-                        <tr>
-                            <td><span class="rank-badge rank-3">3</span>UniVideo</td>
-                            <td><span class="type-badge type-opensource">Open-source</span></td>
-                            <td>2.13</td>
-                            <td>3.27</td>
-                            <td>3.06</td>
-                            <td>2.82</td>
-                        </tr>
-                        <tr>
-                            <td><span class="rank-badge rank-other">4</span>Wan 2.6</td>
-                            <td><span class="type-badge type-commercial">Commercial</span></td>
-                            <td>1.85</td>
-                            <td>3.44</td>
-                            <td>2.40</td>
-                            <td>2.56</td>
-                        </tr>
-                        <tr>
-                            <td><span class="rank-badge rank-other">5</span>VACE</td>
-                            <td><span class="type-badge type-opensource">Open-source</span></td>
-                            <td>2.02</td>
-                            <td>3.08</td>
-                            <td class="worst-score">1.20</td>
-                            <td>2.10</td>
-                        </tr>
-                        <tr>
-                            <td><span class="rank-badge rank-other">6</span>Luma Ray2</td>
-                            <td><span class="type-badge type-commercial">Commercial</span></td>
-                            <td class="worst-score">1.88</td>
-                            <td class="worst-score">2.88</td>
-                            <td>1.17</td>
-                            <td class="worst-score">1.98</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
     <!-- Key Findings -->
-    <section class="section-dark">
+    <section class="section-light" id="findings">
         <div class="container">
             <div class="section-header">
                 <h2>What we found.</h2>
@@ -585,8 +636,8 @@
             <div class="dim-grid" style="max-width: 1000px;">
                 <div class="dim-card">
                     <div class="dim-icon if-icon">📊</div>
-                    <h3>Commercial Models Lead</h3>
-                    <p>Grok Imagine and Kling Omni are the strongest systems overall (3.18 and 3.16), while UniVideo is the strongest open-source model, outperforming Wan 2.6 and Luma Ray2.</p>
+                    <h3>Kling Leads the Pack</h3>
+                    <p>Kling o3 Omni (3.057) and Kling o1 (2.985) top the leaderboard. UniVideo is the strongest open-source model (2.516), outperforming several commercial systems.</p>
                 </div>
                 <div class="dim-card">
                     <div class="dim-icon rq-icon">🎯</div>
@@ -596,14 +647,14 @@
                 <div class="dim-card">
                     <div class="dim-icon ee-icon">⚠️</div>
                     <h3>Locality Is the Biggest Gap</h3>
-                    <p>EE shows the widest spread (1.17–3.39), confirming that over-editing and unintended scene changes remain a major failure mode in current systems like VACE and Luma Ray2.</p>
+                    <p>EE shows the widest spread (1.180–3.376), confirming that over-editing and unintended scene changes remain a major failure mode in current systems like VACE and Luma Ray 2.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Citation -->
-    <section class="section-light">
+    <section class="section-dark" id="citation">
         <div class="container narrow">
             <h2>Citation</h2>
             <pre><button class="copy-btn" onclick="copyBibtex()">Copy</button><code id="bibtex">@article{gao2026vefxbench,
@@ -657,6 +708,34 @@
             v.pause();
             videoObserver.observe(v);
         });
+
+        // Sticky TOC: show after scrolling past hero
+        const tocNav = document.getElementById('toc-nav');
+        const heroSection = document.getElementById('hero');
+        const tocObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    tocNav.classList.add('visible');
+                } else {
+                    tocNav.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0, rootMargin: '-60px 0px 0px 0px' });
+        tocObserver.observe(heroSection);
+
+        // Active TOC link highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const tocLinks = document.querySelectorAll('.toc-link');
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    tocLinks.forEach(link => link.classList.remove('active'));
+                    const activeLink = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+                    if (activeLink) activeLink.classList.add('active');
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '-80px 0px -50% 0px' });
+        sections.forEach(s => { if (s.id !== 'hero') sectionObserver.observe(s); });
     </script>
 </body>
 </html>
