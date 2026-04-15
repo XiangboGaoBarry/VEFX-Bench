@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEFX-Bench — Video Editing Quality Benchmark</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css?v=1.0">
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <img src="logo.png" alt="VEFX-Bench Logo" class="hero-logo">
+        <h1>VEFX-<span class="accent">Bench</span></h1>
+        <p class="hero-tagline">Benchmarking Generic Video Editing<br>and Visual Effects</p>
+        <div class="hero-links">
+            <a href="#" class="pill">📄 Paper</a>
+            <a href="https://github.com/taco-group/VEFX-Bench" class="pill">💻 Code</a>
+            <a href="https://huggingface.co/datasets/xiangbog/VEFX-Bench" class="pill pill-outline">🤗 Dataset</a>
+            <a href="#" class="pill pill-outline">🏆 Leaderboard</a>
+        </div>
+        <p class="hero-authors">
+            <a href="https://www.xiangbogao.com/" class="author-link">Xiangbo Gao</a><sup>1,2</sup> &middot;
+            Sicong Jiang<sup>3</sup> &middot;
+            Bangya Liu<sup>3</sup> &middot;
+            Xinghao Chen<sup>1</sup> &middot;
+            Minglai Yang<sup>3</sup> &middot;
+            Siyuan Yang<sup>1</sup> &middot;
+            Mingyang Wu<sup>1</sup> &middot;
+            Jiongze Yu<sup>1</sup> &middot;
+            Qi Zheng<sup>2</sup> &middot;
+            Haozhi Wang<sup>2</sup> &middot;
+            Jiayi Zhang<sup>4</sup> &middot;
+            Jared Yang<sup>2</sup> &middot;
+            Jie Yang<sup>2</sup> &middot;
+            Zihan Wang<sup>3</sup> &middot;
+            Qing Yin<sup>2</sup> &middot;
+            Zhengzhong Tu<sup>1,2</sup>
+        </p>
+        <p class="hero-affiliation"><sup>1</sup>Texas A&amp;M University &nbsp; <sup>2</sup>Visko Platform &nbsp; <sup>3</sup>Abaka AI &nbsp; <sup>4</sup>UW-Madison</p>
+    </section>
+
+    <!-- Problem Statement -->
+    <section class="section-dark">
+        <div class="container narrow">
+            <h2>Editing video is easy.<br>Measuring quality is hard.</h2>
+            <p class="body-large">
+                Video editing models can now follow complex instructions — zooming, removing objects,
+                changing styles, adding elements. But how do we know which edits are actually <strong>good</strong>?
+            </p>
+            <p class="body-large">
+                <strong>VEFX-Dataset</strong> provides <strong>5,049</strong> human-annotated video editing examples
+                from <strong>1,419</strong> source videos across <strong>9 categories</strong> and <strong>32 subcategories</strong>,
+                scored along three decoupled dimensions. We further release <strong>VEFX-Reward</strong>, a dedicated
+                reward model, and <strong>VEFX-Bench</strong>, a benchmark of 300 curated pairs for standardized comparison.
+            </p>
+        </div>
+    </section>
+
+    <!-- Three Dimensions -->
+    <section class="section-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>Three dimensions of editing quality.</h2>
+                <p class="section-subtitle">Each edited video is scored on a 1–4 scale across three independent axes, capturing distinct aspects of quality.</p>
+            </div>
+            <div class="dim-grid">
+                <div class="dim-card">
+                    <div class="dim-icon if-icon">🎯</div>
+                    <span class="dim-abbr if-abbr">IF</span>
+                    <h3>Instruction Following</h3>
+                    <p>Does the edit faithfully execute the given instruction? Measures semantic accuracy — whether the intended change actually happened.</p>
+                </div>
+                <div class="dim-card">
+                    <div class="dim-icon rq-icon">🎨</div>
+                    <span class="dim-abbr rq-abbr">RQ</span>
+                    <h3>Rendering Quality</h3>
+                    <p>Is the output visually clean and artifact-free? Evaluates temporal consistency, spatial fidelity, and overall visual quality of the edited video.</p>
+                </div>
+                <div class="dim-card">
+                    <div class="dim-icon ee-icon">🔒</div>
+                    <span class="dim-abbr ee-abbr">EE</span>
+                    <h3>Edit Exclusivity</h3>
+                    <p>Are unrelated regions preserved? Captures whether the model only changed what was asked — without unintended side effects elsewhere.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase -->
+    <section class="section-accent">
+        <div class="container wide">
+            <div class="section-header">
+                <h2>See the benchmark in action.</h2>
+                <p class="section-subtitle">Real editing prompts, real model outputs, real human scores. Each row shows the original video alongside edits from different models.</p>
+            </div>
+
+            <!-- Sample 1: Color Change (landscape) -->
+            <div class="showcase-row reveal">
+                <div class="showcase-prompt">
+                    <span class="prompt-label">Editing Instruction</span>
+                    <span class="edit-type">Attribute Change</span>
+                    Change the color of the red industrial trailer to a bright yellow while maintaining the texture and appearance of the metal surface.
+                </div>
+                <div class="showcase-videos cols-5">
+                    <div class="video-cell">
+                        <video src="static/videos/sample_1_original.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label"><span class="original-badge">ORIGINAL</span> Source</div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_1_kling.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Kling</div>
+                            <div class="scores">
+                                <span class="score-badge score-4">IF: 4</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-4">EE: 4</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_1_grok.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Grok</div>
+                            <div class="scores">
+                                <span class="score-badge score-4">IF: 4</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-3">EE: 3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_1_wan.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Wan 2.6</div>
+                            <div class="scores">
+                                <span class="score-badge score-4">IF: 4</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-1">EE: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_1_univideo.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">UniVideo</div>
+                            <div class="scores">
+                                <span class="score-badge score-1">IF: 1</span>
+                                <span class="score-badge score-1">RQ: 1</span>
+                                <span class="score-badge score-1">EE: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample 2: Remove Object (landscape) -->
+            <div class="showcase-row reveal">
+                <div class="showcase-prompt">
+                    <span class="prompt-label">Editing Instruction</span>
+                    <span class="edit-type">Object Removal</span>
+                    Remove the woman with the grey backpack walking on the right side of the frame.
+                </div>
+                <div class="showcase-videos cols-5">
+                    <div class="video-cell">
+                        <video src="static/videos/sample_2_original.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label"><span class="original-badge">ORIGINAL</span> Source</div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_2_grok.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Grok</div>
+                            <div class="scores">
+                                <span class="score-badge score-4">IF: 4</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-4">EE: 4</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_2_kling.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Kling</div>
+                            <div class="scores">
+                                <span class="score-badge score-4">IF: 4</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-4">EE: 4</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_2_wan.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Wan 2.6</div>
+                            <div class="scores">
+                                <span class="score-badge score-1">IF: 1</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-1">EE: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_2_univideo.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">UniVideo</div>
+                            <div class="scores">
+                                <span class="score-badge score-2">IF: 2</span>
+                                <span class="score-badge score-1">RQ: 1</span>
+                                <span class="score-badge score-1">EE: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample 3: Style Restoration (portrait) -->
+            <div class="showcase-row reveal">
+                <div class="showcase-prompt">
+                    <span class="prompt-label">Editing Instruction</span>
+                    <span class="edit-type">Style Transfer</span>
+                    Restore the natural, realistic colors to the entire scene, replacing the current black and white style with a full-color rendition.
+                </div>
+                <div class="showcase-videos cols-5">
+                    <div class="video-cell portrait">
+                        <video src="static/videos/sample_3_original.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label"><span class="original-badge">ORIGINAL</span> Source</div>
+                        </div>
+                    </div>
+                    <div class="video-cell portrait">
+                        <video src="static/videos/sample_3_kling.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Kling</div>
+                            <div class="scores">
+                                <span class="score-badge score-4">IF: 4</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-1">EE: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell portrait">
+                        <video src="static/videos/sample_3_wan.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Wan 2.6</div>
+                            <div class="scores">
+                                <span class="score-badge score-4">IF: 4</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-3">EE: 3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell portrait">
+                        <video src="static/videos/sample_3_grok.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Grok</div>
+                            <div class="scores">
+                                <span class="score-badge score-3">IF: 3</span>
+                                <span class="score-badge score-3">RQ: 3</span>
+                                <span class="score-badge score-4">EE: 4</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell portrait">
+                        <video src="static/videos/sample_3_univideo.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">UniVideo</div>
+                            <div class="scores">
+                                <span class="score-badge score-1">IF: 1</span>
+                                <span class="score-badge score-1">RQ: 1</span>
+                                <span class="score-badge score-1">EE: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample 4: Camera Zoom (landscape) -->
+            <div class="showcase-row reveal">
+                <div class="showcase-prompt">
+                    <span class="prompt-label">Editing Instruction</span>
+                    <span class="edit-type">Camera Motion</span>
+                    Perform a smooth zoom in on the distant snowy mountain peaks to create a more immersive view.
+                </div>
+                <div class="showcase-videos cols-5">
+                    <div class="video-cell">
+                        <video src="static/videos/sample_4_original.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label"><span class="original-badge">ORIGINAL</span> Source</div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_4_kling.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Kling</div>
+                            <div class="scores">
+                                <span class="score-badge score-4">IF: 4</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-3">EE: 3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_4_vace.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">VACE</div>
+                            <div class="scores">
+                                <span class="score-badge score-2">IF: 2</span>
+                                <span class="score-badge score-1">RQ: 1</span>
+                                <span class="score-badge score-2">EE: 2</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_4_grok.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Grok</div>
+                            <div class="scores">
+                                <span class="score-badge score-1">IF: 1</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-4">EE: 4</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_4_wan.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Wan 2.6</div>
+                            <div class="scores">
+                                <span class="score-badge score-1">IF: 1</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-1">EE: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample 5: Temporal Animation (portrait) -->
+            <div class="showcase-row reveal">
+                <div class="showcase-prompt">
+                    <span class="prompt-label">Editing Instruction</span>
+                    <span class="edit-type">Animate</span>
+                    Animate the hedgehog to crawl slowly along the tree branch towards the woman with blonde hair.
+                </div>
+                <div class="showcase-videos cols-5">
+                    <div class="video-cell portrait">
+                        <video src="static/videos/sample_5_original.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label"><span class="original-badge">ORIGINAL</span> Source</div>
+                        </div>
+                    </div>
+                    <div class="video-cell portrait">
+                        <video src="static/videos/sample_5_wan.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Wan 2.6</div>
+                            <div class="scores">
+                                <span class="score-badge score-4">IF: 4</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-4">EE: 4</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell portrait">
+                        <video src="static/videos/sample_5_grok.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Grok</div>
+                            <div class="scores">
+                                <span class="score-badge score-1">IF: 1</span>
+                                <span class="score-badge score-3">RQ: 3</span>
+                                <span class="score-badge score-3">EE: 3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell portrait">
+                        <video src="static/videos/sample_5_kling.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Kling</div>
+                            <div class="scores">
+                                <span class="score-badge score-1">IF: 1</span>
+                                <span class="score-badge score-3">RQ: 3</span>
+                                <span class="score-badge score-3">EE: 3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell portrait">
+                        <video src="static/videos/sample_5_luma.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Luma Ray2</div>
+                            <div class="scores">
+                                <span class="score-badge score-1">IF: 1</span>
+                                <span class="score-badge score-3">RQ: 3</span>
+                                <span class="score-badge score-3">EE: 3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample 6: Add/Replace Background (landscape) -->
+            <div class="showcase-row reveal">
+                <div class="showcase-prompt">
+                    <span class="prompt-label">Editing Instruction</span>
+                    <span class="edit-type">Background Replace</span>
+                    Replace the entire urban background visible through the black hexagonal mesh with a vibrant, neon-lit cyberpunk city at night.
+                </div>
+                <div class="showcase-videos cols-5">
+                    <div class="video-cell">
+                        <video src="static/videos/sample_6_original.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label"><span class="original-badge">ORIGINAL</span> Source</div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_6_grok.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Grok</div>
+                            <div class="scores">
+                                <span class="score-badge score-4">IF: 4</span>
+                                <span class="score-badge score-4">RQ: 4</span>
+                                <span class="score-badge score-4">EE: 4</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_6_kling.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Kling</div>
+                            <div class="scores">
+                                <span class="score-badge score-2">IF: 2</span>
+                                <span class="score-badge score-2">RQ: 2</span>
+                                <span class="score-badge score-1">EE: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_6_wan.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">Wan 2.6</div>
+                            <div class="scores">
+                                <span class="score-badge score-1">IF: 1</span>
+                                <span class="score-badge score-2">RQ: 2</span>
+                                <span class="score-badge score-1">EE: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-cell">
+                        <video src="static/videos/sample_6_univideo.mp4" autoplay loop muted playsinline></video>
+                        <div class="video-cell-info">
+                            <div class="video-cell-label">UniVideo</div>
+                            <div class="scores">
+                                <span class="score-badge score-1">IF: 1</span>
+                                <span class="score-badge score-1">RQ: 1</span>
+                                <span class="score-badge score-1">EE: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="section-dark">
+        <div class="container">
+            <div class="section-header">
+                <h2>Benchmark at a glance.</h2>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card reveal">
+                    <div class="stat-number">5,049</div>
+                    <div class="stat-label">Annotated Examples</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-number">1,419</div>
+                    <div class="stat-label">Source Videos</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-number">9 / 32</div>
+                    <div class="stat-label">Categories / Subcategories</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Editing Systems</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Quality Dimensions</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-number">300</div>
+                    <div class="stat-label">Benchmark Pairs</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section class="section-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>Model leaderboard.</h2>
+                <p class="section-subtitle">VEFX-Reward-32B scores on the 1–4 scale. Ranked by overall average. Higher is better.</p>
+            </div>
+            <div class="leaderboard-wrapper reveal">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Type</th>
+                            <th>IF ↑</th>
+                            <th>RQ ↑</th>
+                            <th>EE ↑</th>
+                            <th>Overall ↑</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="rank-badge rank-1">1</span>Grok Imagine</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td>2.73</td>
+                            <td>3.42</td>
+                            <td class="best-score">3.39</td>
+                            <td class="best-score">3.18</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-2">2</span>Kling Omni</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td class="best-score">3.08</td>
+                            <td class="best-score">3.63</td>
+                            <td>2.77</td>
+                            <td>3.16</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-3">3</span>UniVideo</td>
+                            <td><span class="type-badge type-opensource">Open-source</span></td>
+                            <td>2.13</td>
+                            <td>3.27</td>
+                            <td>3.06</td>
+                            <td>2.82</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-other">4</span>Wan 2.6</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td>1.85</td>
+                            <td>3.44</td>
+                            <td>2.40</td>
+                            <td>2.56</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-other">5</span>VACE</td>
+                            <td><span class="type-badge type-opensource">Open-source</span></td>
+                            <td>2.02</td>
+                            <td>3.08</td>
+                            <td class="worst-score">1.20</td>
+                            <td>2.10</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-other">6</span>Luma Ray2</td>
+                            <td><span class="type-badge type-commercial">Commercial</span></td>
+                            <td class="worst-score">1.88</td>
+                            <td class="worst-score">2.88</td>
+                            <td>1.17</td>
+                            <td class="worst-score">1.98</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Findings -->
+    <section class="section-dark">
+        <div class="container">
+            <div class="section-header">
+                <h2>What we found.</h2>
+            </div>
+            <div class="dim-grid" style="max-width: 1000px;">
+                <div class="dim-card">
+                    <div class="dim-icon if-icon">📊</div>
+                    <h3>Commercial Models Lead</h3>
+                    <p>Grok Imagine and Kling Omni are the strongest systems overall (3.18 and 3.16), while UniVideo is the strongest open-source model, outperforming Wan 2.6 and Luma Ray2.</p>
+                </div>
+                <div class="dim-card">
+                    <div class="dim-icon rq-icon">🎯</div>
+                    <h3>Visual Quality ≠ Faithfulness</h3>
+                    <p>RQ scores are consistently higher than IF across all models — producing visually plausible edits is far easier than faithfully following editing instructions.</p>
+                </div>
+                <div class="dim-card">
+                    <div class="dim-icon ee-icon">⚠️</div>
+                    <h3>Locality Is the Biggest Gap</h3>
+                    <p>EE shows the widest spread (1.17–3.39), confirming that over-editing and unintended scene changes remain a major failure mode in current systems like VACE and Luma Ray2.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation -->
+    <section class="section-light">
+        <div class="container narrow">
+            <h2>Citation</h2>
+            <pre><button class="copy-btn" onclick="copyBibtex()">Copy</button><code id="bibtex">@article{gao2026vefxbench,
+  title={VEFX-Bench: Benchmarking Generic Video Editing and Visual Effects},
+  author={Gao, Xiangbo and Jiang, Sicong and Liu, Bangya and Chen, Xinghao and Yang, Minglai and Yang, Siyuan and Wu, Mingyang and Yu, Jiongze and Zheng, Qi and Wang, Haozhi and Zhang, Jiayi and Yang, Jared and Yang, Jie and Wang, Zihan and Yin, Qing and Tu, Zhengzhong},
+  journal={arXiv preprint},
+  year={2026}
+}</code></pre>
+        </div>
+    </section>
+
+    <footer>
+        <p>VEFX-Bench &middot; Texas A&amp;M University &middot; Visko Platform &middot; Abaka AI &middot; UW-Madison</p>
+    </footer>
+
+    <script>
+        // Copy bibtex
+        function copyBibtex() {
+            const text = document.getElementById('bibtex').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+
+        // Scroll-triggered reveal animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Lazy video loading - only play videos when visible
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('video').forEach(v => {
+            v.pause();
+            videoObserver.observe(v);
+        });
+    </script>
+</body>
+</html>
