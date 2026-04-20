@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/css/style.css?v=2.0">
 </head>
+
 <body>
 
     <!-- Sticky TOC Navigation -->
@@ -30,8 +32,8 @@
         <h1>VEFX-<span class="accent">Bench</span></h1>
         <p class="hero-tagline">Benchmarking Generic Video Editing<br>and Visual Effects</p>
         <div class="hero-links">
-            <a href="#" class="pill">📄 Paper</a>
-            <a href="https://github.com/taco-group/VEFX-Bench" class="pill">💻 Code</a>
+            <a href="https://arxiv.org/abs/2604.16272" class="pill">📄 Paper</a>
+            <a href="https://github.com/Visko-Platform/VEFX-Bench" class="pill">💻 Code</a>
             <a href="https://huggingface.co/datasets/xiangbog/VEFX-Bench" class="pill pill-outline">🤗 Dataset</a>
             <a href="https://vefx-leaderboard.com/" class="pill pill-outline">🏆 Leaderboard</a>
         </div>
@@ -53,7 +55,9 @@
             Qing Yin<sup>2</sup> &middot;
             Zhengzhong Tu<sup>1,2</sup>
         </p>
-        <p class="hero-affiliation"><sup>1</sup>Texas A&amp;M University &nbsp; <sup>2</sup>Visko Platform &nbsp; <sup>3</sup>Abaka AI &nbsp; <sup>4</sup>UW-Madison</p>
+        <p class="hero-affiliation"><sup>1</sup>Texas A&amp;M University &nbsp; <sup>2</sup>Visko Platform &nbsp;
+            <sup>3</sup>Abaka AI &nbsp; <sup>4</sup>UW-Madison
+        </p>
     </section>
 
     <!-- Leaderboard (moved to top) -->
@@ -61,7 +65,8 @@
         <div class="container">
             <div class="section-header">
                 <h2>Model Leaderboard</h2>
-                <p class="section-subtitle">VEFX-Reward scores on the 1–4 scale. Ranked by GeoAgg (α=2 for IF, β=1 for RQ, γ=1 for EE). Higher is better.</p>
+                <p class="section-subtitle">VEFX-Reward scores on the 1–4 scale. Ranked by GeoAgg (α=2 for IF, β=1 for
+                    RQ, γ=1 for EE). Higher is better.</p>
                 <p class="leaderboard-date">Updated: May 2, 2026</p>
             </div>
             <div class="leaderboard-live-banner reveal">
@@ -173,7 +178,8 @@
         <div class="container wide">
             <div class="section-header">
                 <h2>See the benchmark in action.</h2>
-                <p class="section-subtitle">Real editing prompts, real model outputs, real human scores. Each row shows the original video alongside edits from different models.</p>
+                <p class="section-subtitle">Real editing prompts, real model outputs, real human scores. Each row shows
+                    the original video alongside edits from different models.</p>
             </div>
 
             <!-- Sample 1: Color Change (landscape) -->
@@ -181,7 +187,8 @@
                 <div class="showcase-prompt">
                     <span class="prompt-label">Editing Instruction</span>
                     <span class="edit-type">Attribute Change</span>
-                    Change the color of the red industrial trailer to a bright yellow while maintaining the texture and appearance of the metal surface.
+                    Change the color of the red industrial trailer to a bright yellow while maintaining the texture and
+                    appearance of the metal surface.
                 </div>
                 <div class="showcase-videos cols-5">
                     <div class="video-cell">
@@ -303,7 +310,8 @@
                 <div class="showcase-prompt">
                     <span class="prompt-label">Editing Instruction</span>
                     <span class="edit-type">Style Transfer</span>
-                    Restore the natural, realistic colors to the entire scene, replacing the current black and white style with a full-color rendition.
+                    Restore the natural, realistic colors to the entire scene, replacing the current black and white
+                    style with a full-color rendition.
                 </div>
                 <div class="showcase-videos cols-5">
                     <div class="video-cell portrait">
@@ -486,7 +494,8 @@
                 <div class="showcase-prompt">
                     <span class="prompt-label">Editing Instruction</span>
                     <span class="edit-type">Background Replace</span>
-                    Replace the entire urban background visible through the black hexagonal mesh with a vibrant, neon-lit cyberpunk city at night.
+                    Replace the entire urban background visible through the black hexagonal mesh with a vibrant,
+                    neon-lit cyberpunk city at night.
                 </div>
                 <div class="showcase-videos cols-5">
                     <div class="video-cell">
@@ -555,9 +564,11 @@
             </p>
             <p class="body-large">
                 <strong>VEFX-Dataset</strong> provides <strong>5,049</strong> human-annotated video editing examples
-                from <strong>1,419</strong> source videos across <strong>9 categories</strong> and <strong>32 subcategories</strong>,
+                from <strong>1,419</strong> source videos across <strong>9 categories</strong> and <strong>32
+                    subcategories</strong>,
                 scored along three decoupled dimensions. We further release <strong>VEFX-Reward</strong>, a dedicated
-                reward model, and <strong>VEFX-Bench</strong>, a benchmark of 300 curated pairs for standardized comparison.
+                reward model, and <strong>VEFX-Bench</strong>, a benchmark of 300 curated pairs for standardized
+                comparison.
             </p>
         </div>
     </section>
@@ -567,26 +578,30 @@
         <div class="container">
             <div class="section-header">
                 <h2>Three dimensions of editing quality.</h2>
-                <p class="section-subtitle">Each edited video is scored on a 1–4 scale across three independent axes, capturing distinct aspects of quality.</p>
+                <p class="section-subtitle">Each edited video is scored on a 1–4 scale across three independent axes,
+                    capturing distinct aspects of quality.</p>
             </div>
             <div class="dim-grid">
                 <div class="dim-card">
                     <div class="dim-icon if-icon">🎯</div>
                     <span class="dim-abbr if-abbr">IF</span>
                     <h3>Instruction Following</h3>
-                    <p>Does the edit faithfully execute the given instruction? Measures semantic accuracy — whether the intended change actually happened.</p>
+                    <p>Does the edit faithfully execute the given instruction? Measures semantic accuracy — whether the
+                        intended change actually happened.</p>
                 </div>
                 <div class="dim-card">
                     <div class="dim-icon rq-icon">🎨</div>
                     <span class="dim-abbr rq-abbr">RQ</span>
                     <h3>Rendering Quality</h3>
-                    <p>Is the output visually clean and artifact-free? Evaluates temporal consistency, spatial fidelity, and overall visual quality of the edited video.</p>
+                    <p>Is the output visually clean and artifact-free? Evaluates temporal consistency, spatial fidelity,
+                        and overall visual quality of the edited video.</p>
                 </div>
                 <div class="dim-card">
                     <div class="dim-icon ee-icon">🔒</div>
                     <span class="dim-abbr ee-abbr">EE</span>
                     <h3>Edit Exclusivity</h3>
-                    <p>Are unrelated regions preserved? Captures whether the model only changed what was asked — without unintended side effects elsewhere.</p>
+                    <p>Are unrelated regions preserved? Captures whether the model only changed what was asked — without
+                        unintended side effects elsewhere.</p>
                 </div>
             </div>
         </div>
@@ -637,17 +652,20 @@
                 <div class="dim-card">
                     <div class="dim-icon if-icon">📊</div>
                     <h3>Kling Leads the Pack</h3>
-                    <p>Kling o3 Omni (3.057) and Kling o1 (2.985) top the leaderboard. UniVideo is the strongest open-source model (2.516), outperforming several commercial systems.</p>
+                    <p>Kling o3 Omni (3.057) and Kling o1 (2.985) top the leaderboard. UniVideo is the strongest
+                        open-source model (2.516), outperforming several commercial systems.</p>
                 </div>
                 <div class="dim-card">
                     <div class="dim-icon rq-icon">🎯</div>
                     <h3>Visual Quality ≠ Faithfulness</h3>
-                    <p>RQ scores are consistently higher than IF across all models — producing visually plausible edits is far easier than faithfully following editing instructions.</p>
+                    <p>RQ scores are consistently higher than IF across all models — producing visually plausible edits
+                        is far easier than faithfully following editing instructions.</p>
                 </div>
                 <div class="dim-card">
                     <div class="dim-icon ee-icon">⚠️</div>
                     <h3>Locality Is the Biggest Gap</h3>
-                    <p>EE shows the widest spread (1.180–3.376), confirming that over-editing and unintended scene changes remain a major failure mode in current systems like VACE and Luma Ray 2.</p>
+                    <p>EE shows the widest spread (1.180–3.376), confirming that over-editing and unintended scene
+                        changes remain a major failure mode in current systems like VACE and Luma Ray 2.</p>
                 </div>
             </div>
         </div>
@@ -657,17 +675,18 @@
     <section class="section-dark" id="citation">
         <div class="container narrow">
             <h2>Citation</h2>
-            <pre><button class="copy-btn" onclick="copyBibtex()">Copy</button><code id="bibtex">@article{gao2026vefxbench,
+            <pre><button class="copy-btn" onclick="copyBibtex()">Copy</button><code id="bibtex">@article{gao2025vefxbench,
   title={VEFX-Bench: Benchmarking Generic Video Editing and Visual Effects},
-  author={Gao, Xiangbo and Jiang, Sicong and Liu, Bangya and Chen, Xinghao and Yang, Minglai and Yang, Siyuan and Wu, Mingyang and Yu, Jiongze and Zheng, Qi and Wang, Haozhi and Zhang, Jiayi and Yang, Jared and Yang, Jie and Wang, Zihan and Yin, Qing and Tu, Zhengzhong},
-  journal={arXiv preprint},
+  author={Xiangbo Gao and Sicong Jiang and Bangya Liu and Xinghao Chen and Minglai Yang and Siyuan Yang and Mingyang Wu and Jiongze Yu and Qi Zheng and Haozhi Wang and Jiayi Zhang and Jared Yang and Jie Yang and Zihan Wang and Qing Yin and Zhengzhong Tu},
+  journal={arXiv preprint arXiv:2604.16272},
   year={2026}
 }</code></pre>
         </div>
     </section>
 
     <footer>
-        <p>VEFX-Bench &middot; Texas A&amp;M University &middot; Visko Platform &middot; Abaka AI &middot; UW-Madison</p>
+        <p>VEFX-Bench &middot; Texas A&amp;M University &middot; Visko Platform &middot; Abaka AI &middot; UW-Madison
+        </p>
     </footer>
 
     <script>
@@ -697,7 +716,7 @@
             entries.forEach(entry => {
                 const video = entry.target;
                 if (entry.isIntersecting) {
-                    video.play().catch(() => {});
+                    video.play().catch(() => { });
                 } else {
                     video.pause();
                 }
@@ -738,4 +757,5 @@
         sections.forEach(s => { if (s.id !== 'hero') sectionObserver.observe(s); });
     </script>
 </body>
+
 </html>
